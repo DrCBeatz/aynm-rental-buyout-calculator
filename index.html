@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AYNM Instrument Rental Buyout Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <div class="navbar">
+    <h1 class="navbar__title">AYNM Instrument Rental Buyout Calculator</h1>
+  </div>
+
+  <div class="form">
+    <form id="calculatorForm">
+      <div class="form__group">
+        <label for="purchasePrice" class="form__label">Purchase Price ($)</label>
+        <input type="number" id="purchasePrice" class="form__input" step="0.01" required>
+      </div>
+      <div class="form__group">
+        <label for="monthlyPayment" class="form__label">Monthly Payment (Pre-tax) ($)</label>
+        <input type="number" id="monthlyPayment" class="form__input" step="0.01" required>
+      </div>
+      <div class="form__group">
+        <label for="monthsRented" class="form__label">Months Rented</label>
+        <input type="number" id="monthsRented" class="form__input" min="0" required>
+      </div>
+      <div class="form__group">
+        <label for="deposit" class="form__label">Deposit (Tax-Included) ($)</label>
+        <input type="number" id="deposit" class="form__input" step="0.01" required>
+      </div>
+      <div class="form__group">
+        <label for="province" class="form__label">Province (Tax Rate)</label>
+        <select id="province" class="form__select" required></select>
+      </div>
+      <button type="submit" class="form__button">Calculate</button>
+    </form>
+  </div>
+
+  <div id="result" class="result" style="display: none;">
+    <p><span class="result__label">Total Credit Amount:</span> <span id="totalCredit"></span></p>
+    <p><span class="result__label">Balance Owing:</span> <span id="balanceOwing"></span></p>
+  </div>
+
+  
+</body>
+</html>
