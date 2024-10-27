@@ -27,9 +27,11 @@ describe('calculateBalanceOwing', () => {
     provinceSelect.appendChild(option);
   });
 
-  it('calculates balance owing correctly for less than or equal to 3 months rented', () => {
+  it('calculates balance owing correctly for less than 3 months rented', () => {
     const event = { preventDefault: vi.fn() };
     calculateBalanceOwing(event);
+
+    document.getElementById('monthsRented').value = '2';
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
@@ -51,4 +53,19 @@ describe('calculateBalanceOwing', () => {
     expect(totalCredit).toBe('$144.25 (50%)');
     expect(balanceOwing).toBe('$855.75');
   });
+
+  it('calculates balance owing correctly for exactly 3 months rented', () => {
+    // Update monthsRented value
+    document.getElementById('monthsRented').value = '3';
+  
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCredit).toBe('$238.50 (100%)');
+    expect(balanceOwing).toBe('$761.50');
+  });
+  
 });
