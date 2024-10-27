@@ -181,5 +181,30 @@ describe('calculateBalanceOwing', () => {
     expect(balanceOwing).toBe('$811.76');
   });
 
+  it('calculates correctly with extremely high values', () => {
+    document.getElementById('purchasePrice').value = '1000000';
+    document.getElementById('monthlyPayment').value = '5000';
+    document.getElementById('monthsRented').value = '24';
+    document.getElementById('deposit').value = '10000';
+  
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    // Perform the calculations for expected values
+    const depositPreTax = 10000 / 1.13; // ≈ 8849.56
+    const rentalTotal = 5000 * 24; // 120000
+    const totalCredit = 0.5 * (120000 + 8849.56); // ≈ 64,424.78
+    const balanceOwing = 1000000 - totalCredit; // ≈ 935,575.22
+  
+    const totalCreditText = `$${totalCredit.toFixed(2)} (50%)`;
+    const balanceOwingText = `$${balanceOwing.toFixed(2)}`;
+  
+    const totalCreditOutput = document.getElementById('totalCredit').textContent;
+    const balanceOwingOutput = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCreditOutput).toBe(totalCreditText);
+    expect(balanceOwingOutput).toBe(balanceOwingText);
+  });  
+
   
 });
