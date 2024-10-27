@@ -1,5 +1,10 @@
 {
+  "name": "aynm-rental-buyout-calculator",
+  "version": "1.0.0",
   "scripts": {
     "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^0.34.6"
   }
 }
