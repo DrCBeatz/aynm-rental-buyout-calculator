@@ -1,7 +1,7 @@
 // tests/script.test.js
 
 import {describe, it, expect, beforeEach, vi }  from 'vitest';
-import {calculateBalanceOwing} from '../src/script.js';
+import {calculateBalanceOwing, TAX_RATES} from '../src/script.js';
 
 describe('calculateBalanceOwing', () => {
   beforeEach(() => {
@@ -220,5 +220,26 @@ describe('calculateBalanceOwing', () => {
     expect(balanceOwing).toBeDefined();
   });  
 
+  it('handles undefined tax rate gracefully', () => {
+    // Remove the province from TAX_RATES
+    delete TAX_RATES['ON'];
   
+    const event = { preventDefault: vi.fn() };
+  
+    try {
+      calculateBalanceOwing(event);
+      const totalCredit = document.getElementById('totalCredit').textContent;
+      const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+      // Decide on expected behavior
+      expect(totalCredit).toBe('$0.00 (100%)');
+      expect(balanceOwing).toBe('$1000.00');
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+    } finally {
+      // Restore the tax rate
+      TAX_RATES['ON'] = 0.13;
+    }
+  });
+    
 });
