@@ -165,6 +165,21 @@ describe('calculateBalanceOwing', () => {
     }
   });
   
+  it('calculates correctly with high-precision decimal inputs', () => {
+    document.getElementById('purchasePrice').value = '1000.98765';
+    document.getElementById('monthlyPayment').value = '50.12345';
+    document.getElementById('monthsRented').value = '2';
+    document.getElementById('deposit').value = '100.54321';
   
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCredit).toBe('$189.22 (100%)');
+    expect(balanceOwing).toBe('$811.76');
+  });
+
   
 });
