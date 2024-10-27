@@ -19,11 +19,11 @@
     <form id="calculatorForm">
       <div class="form__group">
         <label for="purchasePrice" class="form__label">Purchase Price ($)</label>
-        <input type="number" id="purchasePrice" class="form__input" step="0.01" required>
+        <input type="number" id="purchasePrice" class="form__input" step="0.01" min="0" required>
       </div>
       <div class="form__group">
         <label for="monthlyPayment" class="form__label">Monthly Payment (Pre-tax) ($)</label>
-        <input type="number" id="monthlyPayment" class="form__input" step="0.01" required>
+        <input type="number" id="monthlyPayment" class="form__input" step="0.01" min="0" required>
       </div>
       <div class="form__group">
         <label for="monthsRented" class="form__label">Months Rented</label>
@@ -31,7 +31,7 @@
       </div>
       <div class="form__group">
         <label for="deposit" class="form__label">Deposit (Tax-Included) ($)</label>
-        <input type="number" id="deposit" class="form__input" step="0.01" required>
+        <input type="number" id="deposit" class="form__input" step="0.01" min="0" required>
       </div>
       <div class="form__group">
         <label for="province" class="form__label">Province (Tax Rate)</label>
