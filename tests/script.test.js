@@ -204,6 +204,20 @@ describe('calculateBalanceOwing', () => {
   
     expect(totalCreditOutput).toBe(totalCreditText);
     expect(balanceOwingOutput).toBe(balanceOwingText);
+  });
+
+  it('updates the result section in the DOM', () => {
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    const resultSection = document.getElementById('result');
+    expect(resultSection.style.display).toBe('block');
+  
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCredit).toBeDefined();
+    expect(balanceOwing).toBeDefined();
   });  
 
   
