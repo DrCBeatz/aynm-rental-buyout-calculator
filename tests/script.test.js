@@ -31,8 +31,6 @@ describe('calculateBalanceOwing', () => {
     const event = { preventDefault: vi.fn() };
     calculateBalanceOwing(event);
 
-    document.getElementById('monthsRented').value = '2';
-
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
 
@@ -67,5 +65,25 @@ describe('calculateBalanceOwing', () => {
     expect(totalCredit).toBe('$238.50 (100%)');
     expect(balanceOwing).toBe('$761.50');
   });
+
+  it('calculates correctly for a province with a different tax rate (QC)', () => {
+    // Update province to QC
+    const provinceSelect = document.getElementById('province');
+    provinceSelect.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = 'QC';
+    option.textContent = 'QC (14.98%)';
+    provinceSelect.appendChild(option);
+  
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCredit).toBe('$186.98 (100%)');
+    expect(balanceOwing).toBe('$813.02');
+  });
+  
   
 });
