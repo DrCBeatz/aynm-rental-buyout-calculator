@@ -5,7 +5,7 @@
  * @constant
  * @type {Object.<string, number>}
  */
-const TAX_RATES = {
+export const TAX_RATES = {
   'ON': 0.13,
   'QC': 0.14975,
   'BC': 0.12,
@@ -24,8 +24,9 @@ const TAX_RATES = {
 /**
  * Populates the province dropdown with each province and its corresponding tax rate.
  */
-function populateProvinceDropdown() {
+export function populateProvinceDropdown() {
   const provinceSelect = document.getElementById('province');
+  if (!provinceSelect) return;
   for (const [province, rate] of Object.entries(TAX_RATES)) {
     const option = document.createElement('option');
     option.value = province;
@@ -33,9 +34,27 @@ function populateProvinceDropdown() {
     provinceSelect.appendChild(option);
   }
 }
-populateProvinceDropdown();
 
-document.getElementById("calculatorForm").onsubmit = calculateBalanceOwing;
+// Attach event listeners if running in the browser
+if (typeof window !== 'undefined') {
+  // Wait for the DOM to be fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      populateProvinceDropdown();
+      const calculatorForm = document.getElementById('calculatorForm');
+      if (calculatorForm) {
+        calculatorForm.onsubmit = calculateBalanceOwing;
+      }
+    });
+  } else {
+    // DOM is already loaded
+    populateProvinceDropdown();
+    const calculatorForm = document.getElementById('calculatorForm');
+    if (calculatorForm) {
+      calculatorForm.onsubmit = calculateBalanceOwing;
+    }
+  }
+}
 
 /**
  * Handles the calculation of the balance owing for a rental instrument buyout.
@@ -43,7 +62,7 @@ document.getElementById("calculatorForm").onsubmit = calculateBalanceOwing;
  * @param {Event} event - The form submission event.
  * @returns {void}
  */
-function calculateBalanceOwing(event) {
+export function calculateBalanceOwing(event) {
   event.preventDefault();
 
   /**

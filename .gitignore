@@ -1,0 +1,52 @@
+# Node.js dependencies
+/node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+
+# Build output directories
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE directories
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Thumbnails
+Thumbs.db
+
+# macOS files
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Optional: Exclude package lock files if not committing them
+# package-lock.json
+# yarn.lock
