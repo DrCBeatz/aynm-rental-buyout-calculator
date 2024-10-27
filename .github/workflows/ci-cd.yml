@@ -50,8 +50,8 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync files to S3
-        uses: aws-actions/s3-sync-action@v0.5.2
+        uses: aws-actions/aws-s3-sync@v2
         with:
-          source-dir: src
-          destination-bucket: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          source: './src'
+          destination: 's3://${{ secrets.AWS_S3_BUCKET_NAME }}'
           delete: true
