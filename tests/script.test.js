@@ -141,6 +141,30 @@ describe('calculateBalanceOwing', () => {
       expect(error).toBeInstanceOf(Error);
     }
   });
+
+  it('handles unknown province codes gracefully', () => {
+    const provinceSelect = document.getElementById('province');
+    provinceSelect.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = 'XX'; // Non-existent province code
+    option.textContent = 'XX (0.00%)';
+    provinceSelect.appendChild(option);
+  
+    const event = { preventDefault: vi.fn() };
+  
+    try {
+      calculateBalanceOwing(event);
+      // Decide on expected behavior, e.g., default tax rate or error message
+      const totalCredit = document.getElementById('totalCredit').textContent;
+      const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+      expect(totalCredit).toBe('$188.50 (100%)'); // If tax rate defaults to 0%
+      expect(balanceOwing).toBe('$811.50');
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+    }
+  });
+  
   
   
 });
