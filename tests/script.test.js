@@ -72,7 +72,7 @@ describe('calculateBalanceOwing', () => {
     provinceSelect.innerHTML = '';
     const option = document.createElement('option');
     option.value = 'QC';
-    option.textContent = 'QC (14.98%)';
+    option.textContent = 'QC (14.975%)';
     provinceSelect.appendChild(option);
   
     const event = { preventDefault: vi.fn() };

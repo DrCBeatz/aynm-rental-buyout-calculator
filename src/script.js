@@ -30,7 +30,7 @@ export function populateProvinceDropdown() {
   for (const [province, rate] of Object.entries(TAX_RATES)) {
     const option = document.createElement('option');
     option.value = province;
-    option.textContent = `${province} (${(rate * 100).toFixed(2)}%)`;
+    option.textContent = `${province} (${(rate * 100)}%)`;
     provinceSelect.appendChild(option);
   }
 }
