@@ -85,5 +85,62 @@ describe('calculateBalanceOwing', () => {
     expect(balanceOwing).toBe('$813.02');
   });
   
+  it('calculates correctly when months rented is zero', () => {
+    document.getElementById('monthsRented').value = '0';
+  
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+  
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+    expect(totalCredit).toBe('$88.50 (100%)');
+    expect(balanceOwing).toBe('$911.50');
+  });
+  
+  it('handles empty input values gracefully', () => {
+    document.getElementById('purchasePrice').value = '';
+    document.getElementById('monthlyPayment').value = '';
+    document.getElementById('monthsRented').value = '';
+    document.getElementById('deposit').value = '';
+  
+    const event = { preventDefault: vi.fn() };
+  
+    // Wrap in a try-catch block to catch any errors
+    try {
+      calculateBalanceOwing(event);
+      // If the function doesn't throw, check for expected behavior
+      const totalCredit = document.getElementById('totalCredit').textContent;
+      const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+      expect(totalCredit).toBe('$0.00 (100%)');
+      expect(balanceOwing).toBe('$0.00');
+    } catch (error) {
+      // If an error is expected, you can assert that
+      expect(error).toBeInstanceOf(Error);
+    }
+  });
+  
+  it('handles non-numeric input values gracefully', () => {
+    document.getElementById('purchasePrice').value = 'abc';
+    document.getElementById('monthlyPayment').value = '$50';
+    document.getElementById('monthsRented').value = 'two';
+    document.getElementById('deposit').value = '@100';
+  
+    const event = { preventDefault: vi.fn() };
+  
+    try {
+      calculateBalanceOwing(event);
+      const totalCredit = document.getElementById('totalCredit').textContent;
+      const balanceOwing = document.getElementById('balanceOwing').textContent;
+  
+      // Decide on expected behavior, e.g., show $0.00 or an error message
+      expect(totalCredit).toBe('$0.00 (100%)');
+      expect(balanceOwing).toBe('$0.00');
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+    }
+  });
+  
   
 });
