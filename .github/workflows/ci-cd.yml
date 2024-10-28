@@ -36,7 +36,6 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Deploy only from the main branch
 
     steps:
       - name: Checkout repository
