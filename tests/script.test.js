@@ -15,6 +15,7 @@ describe('calculateBalanceOwing', () => {
         <select id="province"></select>
         <div id="totalCredit"></div>
         <div id="balanceOwing"></div>
+        <div id="balanceOwingWithTax"></div>
         <div id="result"></div>
       </form>
     `;
@@ -26,6 +27,7 @@ describe('calculateBalanceOwing', () => {
     option.textContent = 'ON (13.00%)';
     provinceSelect.appendChild(option);
   });
+  
 
   it('calculates balance owing correctly for less than 3 months rented', () => {
     const event = { preventDefault: vi.fn() };

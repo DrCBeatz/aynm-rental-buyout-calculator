@@ -65,20 +65,13 @@ if (typeof window !== 'undefined') {
 export function calculateBalanceOwing(event) {
   event.preventDefault();
 
-  /**
-   * @type {number} purchasePrice - The initial purchase price of the instrument.
-   * @type {number} monthlyPayment - The monthly rental payment amount (pre-tax).
-   * @type {number} monthsRented - The number of months the instrument was rented.
-   * @type {number} deposit - The refundable deposit amount (includes tax).
-   * @type {string} province - The province or territory where the instrument was rented.
-   */
   const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
   const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
   const monthsRented = parseInt(document.getElementById('monthsRented').value);
   const deposit = parseFloat(document.getElementById('deposit').value);
   const province = document.getElementById('province').value;
 
-  const taxRate = TAX_RATES[province];
+  const taxRate = TAX_RATES[province] || 0;
   const depositPreTax = deposit / (1 + taxRate);
   const rentalTotal = monthlyPayment * monthsRented;
 
@@ -86,20 +79,18 @@ export function calculateBalanceOwing(event) {
   const creditPercentage = monthsRented <= 3 ? 1.0 : 0.5;
   const creditLabel = monthsRented <= 3 ? "100%" : "50%";
 
-  /**
-   * The total credit amount is calculated based on rental payments and deposit.
-   * @type {number}
-   */
+  // Calculate the total credit
   const totalCredit = creditPercentage * (rentalTotal + depositPreTax);
 
-  /**
-   * The remaining balance after applying the credit.
-   * @type {number}
-   */
+  // Calculate balance owing before tax
   const balanceOwing = purchasePrice - totalCredit;
+
+  // Calculate balance owing including tax
+  const balanceOwingWithTax = balanceOwing * (1 + taxRate);
 
   // Display results
   document.getElementById('totalCredit').textContent = `$${totalCredit.toFixed(2)} (${creditLabel})`;
   document.getElementById('balanceOwing').textContent = `$${balanceOwing.toFixed(2)}`;
+  document.getElementById('balanceOwingWithTax').textContent = `$${balanceOwingWithTax.toFixed(2)}`;
   document.getElementById('result').style.display = 'block';
 }
