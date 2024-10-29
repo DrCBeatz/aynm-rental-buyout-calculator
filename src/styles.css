@@ -1,4 +1,4 @@
-/* styles.css */
+/* src/styles.css */
 
 body {
   font-family: Arial, sans-serif;
@@ -40,13 +40,24 @@ body {
   font-weight: bold;
 }
 
-.form__input, .form__select {
+.form__input,
+.form__select {
+  height: 2.5rem;
   width: calc(100% - 1px);
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+  background-color: #fff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+  background-image: url("images/select-arrow.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
 }
 
 .result {
@@ -86,12 +97,16 @@ body {
     font-size: 1.25rem;
   }
 
-  .form, .result {
+  .form,
+  .result {
     margin: 1rem;
     padding: 1.5rem;
   }
 
-  .form__label, .form__input, .form__select, .form__button {
+  .form__label,
+  .form__input,
+  .form__select,
+  .form__button {
     font-size: 0.9rem;
   }
 }
