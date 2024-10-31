@@ -49,6 +49,9 @@ body {
   border-radius: 4px;
   font-size: 1rem;
   box-sizing: border-box;
+}
+
+.form__select {
   background-color: #fff;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -58,6 +61,10 @@ body {
   background-repeat: no-repeat;
   background-position: right 0.75rem center;
   background-size: 1rem;
+}
+
+.form__select:hover {
+  cursor: pointer;
 }
 
 .result {
