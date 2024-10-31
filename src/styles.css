@@ -137,3 +137,33 @@ body {
 .result__table td:last-child {
   text-align: right;
 }
+
+.form__input,
+.form__select {
+  height: 2.5rem;
+  width: calc(100% - 1px);
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease; /* Add transition for smooth fade */
+}
+
+.form__input:focus,
+.form__select:focus {
+  outline: 2px solid #007acc;
+  background-color: #f0f8ff;
+}
+
+.form__input:hover,
+.form__select:hover {
+  background-color: #f9f9f9;
+}
+
+.form__group input[type="number"]::-webkit-outer-spin-button,
+.form__group input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: inner-spin-button;
+  opacity: 1;
+  margin-left: 10px;
+}

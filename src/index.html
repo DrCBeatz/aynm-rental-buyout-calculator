@@ -20,23 +20,28 @@
     <form id="calculatorForm">
       <div class="form__group">
         <label for="purchasePrice" class="form__label">Purchase Price ($)</label>
-        <input type="number" id="purchasePrice" class="form__input" step="0.01" min="0" required>
+        <input type="number" id="purchasePrice" class="form__input show_always" step="0.01" min="0" required
+          title="Enter the full price of the instrument (plus added accessories) if purchased outright.">
       </div>
       <div class="form__group">
         <label for="monthlyPayment" class="form__label">Monthly Payment (Pre-tax) ($)</label>
-        <input type="number" id="monthlyPayment" class="form__input" step="0.01" min="0" required>
+        <input type="number" id="monthlyPayment" class="form__input " step="0.01" min="0" required
+          title="Enter the monthly payment amount (before tax) for renting the instrument.">
       </div>
       <div class="form__group">
         <label for="monthsRented" class="form__label">Months Rented</label>
-        <input type="number" id="monthsRented" class="form__input" min="0" required>
+        <input type="number" id="monthsRented" class="form__input show_always" min="0" required
+          title="Enter the total number of months the instrument has been rented so far.">
       </div>
       <div class="form__group">
         <label for="deposit" class="form__label">Deposit (Tax-Included) ($)</label>
-        <input type="number" id="deposit" class="form__input" step="0.01" min="0" required>
+        <input type="number" id="deposit" class="form__input show_always" step="0.01" min="0" required
+          title="Enter the security deposit amount paid when first renting the instrument.">
       </div>
       <div class="form__group">
         <label for="province" class="form__label">Province (Tax Rate)</label>
-        <select id="province" class="form__select" required></select>
+        <select id="province" class="form__select" required
+          title="Select the customer's province to apply the correct tax rate for the buyout."></select>
       </div>
       <button type="submit" class="form__button">Calculate</button>
     </form>
@@ -44,21 +49,21 @@
 
   <div id="result" class="result" style="display: none;">
     <table class="result__table">
-      <tr>
+      <tr title="Calculated credit based on the number of months rented and the deposit.">
         <td class="result__label">Total Credit Amount:</td>
         <td id="totalCredit"></td>
       </tr>
-      <tr>
+      <tr title="Remaining amount owed, excluding tax, after applying credit.">
         <td class="result__label">Balance Owing (before tax):</td>
         <td id="balanceOwing"></td>
       </tr>
-      <tr>
+      <tr title="Total amount owed, including tax.">
         <td class="result__label">Balance Owing (including tax):</td>
         <td id="balanceOwingWithTax"></td>
       </tr>
     </table>
   </div>
-  
+
 </body>
 
 </html>
