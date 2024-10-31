@@ -205,9 +205,11 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBe('(100%) $189.22');
     expect(balanceOwing).toBe('$811.76');
+    expect(balanceOwingWithTax).toBe('$917.29'); // Balance Owing including 13% tax
   });
 
   it('calculates correctly with extremely high values', () => {
@@ -230,9 +232,11 @@ describe('calculateBalanceOwing', () => {
 
     const totalCreditOutput = document.getElementById('totalCredit').textContent;
     const balanceOwingOutput = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCreditOutput).toBe(totalCreditText);
     expect(balanceOwingOutput).toBe(balanceOwingText);
+    expect(balanceOwingWithTax).toBe('$1057200.00'); // Balance Owing including
   });
 
   it('updates the result section in the DOM', () => {
@@ -244,9 +248,11 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBeDefined();
     expect(balanceOwing).toBeDefined();
+    expect(balanceOwingWithTax).toBeDefined();
   });
 
   it('handles undefined tax rate gracefully', () => {
@@ -259,10 +265,12 @@ describe('calculateBalanceOwing', () => {
       calculateBalanceOwing(event);
       const totalCredit = document.getElementById('totalCredit').textContent;
       const balanceOwing = document.getElementById('balanceOwing').textContent;
+      const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
       // Decide on expected behavior
       expect(totalCredit).toBe('(100%) $0.00');
       expect(balanceOwing).toBe('$1000.00');
+      expect(balanceOwingWithTax).toBe('$1000.00');
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
     } finally {
