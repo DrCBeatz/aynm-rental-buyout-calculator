@@ -89,7 +89,7 @@ export function calculateBalanceOwing(event) {
   const balanceOwingWithTax = balanceOwing * (1 + taxRate);
 
   // Display results
-  document.getElementById('totalCredit').textContent = `$${totalCredit.toFixed(2)} (${creditLabel})`;
+  document.getElementById('totalCredit').textContent = `(${creditLabel}) $${totalCredit.toFixed(2)}`;
   document.getElementById('balanceOwing').textContent = `$${balanceOwing.toFixed(2)}`;
   document.getElementById('balanceOwingWithTax').textContent = `$${balanceOwingWithTax.toFixed(2)}`;
   document.getElementById('result').style.display = 'block';

@@ -117,3 +117,23 @@ body {
     font-size: 0.9rem;
   }
 }
+
+.result__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.result__table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.result__label {
+  font-weight: bold;
+  width: 60%;
+  text-align: left;
+}
+
+.result__table td:last-child {
+  text-align: right;
+}
