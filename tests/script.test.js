@@ -29,19 +29,31 @@ describe('calculateBalanceOwing', () => {
   });
 
 
+  // Utility function to round to two decimal places and return as a number for consistent comparisons
+  function roundToTwo(value) {
+    return parseFloat((Math.round(value * 100) / 100).toFixed(2));
+  }
+
   it('calculates balance owing correctly for less than 3 months rented', () => {
     const event = { preventDefault: vi.fn() };
     calculateBalanceOwing(event);
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
+    // Calculate the expected values using roundToTwo consistently
+    const expectedBalanceOwing = roundToTwo(811.50);
+    const expectedBalanceOwingWithTax = roundToTwo(expectedBalanceOwing * 1.13); // Apply tax at 13%
+
+    // Format as strings to ensure the expected values have two decimal places for consistent comparisons
     expect(totalCredit).toBe('(100%) $188.50');
-    expect(balanceOwing).toBe('$811.50');
+    expect(balanceOwing).toBe(`$${expectedBalanceOwing.toFixed(2)}`);
+    expect(balanceOwingWithTax).toBe(`$${Math.round(expectedBalanceOwingWithTax).toFixed(2)}`);
   });
 
+
   it('calculates balance owing correctly for more than 3 months rented', () => {
-    // Update monthsRented value
     document.getElementById('monthsRented').value = '4';
 
     const event = { preventDefault: vi.fn() };
@@ -49,9 +61,11 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBe('(50%) $144.25');
     expect(balanceOwing).toBe('$855.75');
+    expect(balanceOwingWithTax).toBe('$967.00'); // Balance Owing including 13% tax
   });
 
   it('calculates balance owing correctly for exactly 3 months rented', () => {
@@ -63,13 +77,14 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBe('(100%) $238.50');
     expect(balanceOwing).toBe('$761.50');
+    expect(balanceOwingWithTax).toBe('$860.50'); // Balance Owing including 13% tax
   });
 
   it('calculates correctly for a province with a different tax rate (QC)', () => {
-    // Update province to QC
     const provinceSelect = document.getElementById('province');
     provinceSelect.innerHTML = '';
     const option = document.createElement('option');
@@ -82,9 +97,11 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBe('(100%) $186.98');
     expect(balanceOwing).toBe('$813.02');
+    expect(balanceOwingWithTax).toBe('$934.77'); // Balance Owing including 14.975% tax
   });
 
   it('calculates correctly when months rented is zero', () => {
@@ -95,9 +112,12 @@ describe('calculateBalanceOwing', () => {
 
     const totalCredit = document.getElementById('totalCredit').textContent;
     const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
     expect(totalCredit).toBe('(100%) $88.50');
     expect(balanceOwing).toBe('$911.50');
+    expect(balanceOwingWithTax).toBe('$1030.00'); // Balance Owing including 13% tax
+
   });
 
   it('handles empty input values gracefully', () => {
@@ -114,9 +134,11 @@ describe('calculateBalanceOwing', () => {
       // If the function doesn't throw, check for expected behavior
       const totalCredit = document.getElementById('totalCredit').textContent;
       const balanceOwing = document.getElementById('balanceOwing').textContent;
+      const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
       expect(totalCredit).toBe('$0.00 (100%)');
       expect(balanceOwing).toBe('$0.00');
+      expect(balanceOwingWithTax).toBe('$0.00');
     } catch (error) {
       // If an error is expected, you can assert that
       expect(error).toBeInstanceOf(Error);
@@ -135,10 +157,13 @@ describe('calculateBalanceOwing', () => {
       calculateBalanceOwing(event);
       const totalCredit = document.getElementById('totalCredit').textContent;
       const balanceOwing = document.getElementById('balanceOwing').textContent;
+      const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
       // Decide on expected behavior, e.g., show $0.00 or an error message
       expect(totalCredit).toBe('$0.00 (100%)');
       expect(balanceOwing).toBe('$0.00');
+      expect(balanceOwingWithTax).toBe('$0.00');
+
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
     }
@@ -159,9 +184,11 @@ describe('calculateBalanceOwing', () => {
       // Decide on expected behavior, e.g., default tax rate or error message
       const totalCredit = document.getElementById('totalCredit').textContent;
       const balanceOwing = document.getElementById('balanceOwing').textContent;
+      const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
 
       expect(totalCredit).toBe('$188.50 (100%)'); // If tax rate defaults to 0%
       expect(balanceOwing).toBe('$811.50');
+      expect(balanceOwingWithTax).toBe('$811.50');
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
     }
