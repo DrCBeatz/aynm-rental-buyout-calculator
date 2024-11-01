@@ -26,9 +26,9 @@ export function calculateDepositCredit(deposit, taxRate) {
 }
 
 export function calculateRentalPaymentCredit(monthlyPayment, monthsRented) {
-  const creditPercentage = monthsRented <= 3 ? 1.0 : 0.5;
-  const creditAmount = creditPercentage * (monthlyPayment * monthsRented);
-  return parseFloat(creditAmount.toFixed(2));
+  const creditPercentage = monthsRented <= 3 ? 100 : 50;
+  const creditAmount = (creditPercentage / 100) * (monthlyPayment * monthsRented);
+  return { creditPercentage, creditAmount: parseFloat(creditAmount.toFixed(2)) };
 }
 
 export function calculateTotalCredit(depositCredit, rentalPaymentCredit) {
@@ -87,12 +87,12 @@ if (typeof window !== 'undefined') {
 export function calculateBalanceOwing(event) {
   event.preventDefault();
 
-  const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
-  const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
-  const monthsRented = parseInt(document.getElementById('monthsRented').value);
-  const deposit = parseFloat(document.getElementById('deposit').value);
-  const province = document.getElementById('province').value;
-  const taxRate = TAX_RATES[province];
+  const purchasePrice = parseFloat(document.getElementById('purchasePrice')?.value) || 0;
+  const monthlyPayment = parseFloat(document.getElementById('monthlyPayment')?.value) || 0;
+  const monthsRented = parseInt(document.getElementById('monthsRented')?.value) || 0;
+  const deposit = parseFloat(document.getElementById('deposit')?.value) || 0;
+  const province = document.getElementById('province')?.value || 'ON';
+  const taxRate = TAX_RATES[province] || 0;
 
   // Calculate components
   const { creditPercentage, creditAmount: rentalPaymentCredit } = calculateRentalPaymentCredit(monthlyPayment, monthsRented);
