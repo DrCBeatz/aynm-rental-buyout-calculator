@@ -12,11 +12,11 @@
 
 <body>
 
-  <div class="navbar">
+  <header class="navbar">
     <h1 class="navbar__title">AYNM Instrument Rental Buyout Calculator</h1>
-  </div>
+  </header>
 
-  <div class="form">
+  <main class="form">
     <form id="calculatorForm">
       <div class="form__group">
         <label for="purchasePrice" class="form__label">Purchase Price ($)</label>
@@ -43,36 +43,34 @@
         <select id="province" class="form__select" required
           title="Select the customer's province to apply the correct tax rate for the buyout."></select>
       </div>
-      <button type="submit" class="form__button">Calculate</button>
+      <button type="submit" class="form__button" aria-label="Calculate the balance owing">Calculate</button>
     </form>
-  </div>
+  </main>
 
-  <div id="result" class="result">
+  <aside id="result" class="result">
     <table class="result__table">
       <tr title="Portion of the rental payments credited towards purchase.">
-        <td class="result__label">Rental Payment Credit:</td>
-        <td id="rentalPaymentCredit"></td>
+        <td class="result__label" id="rentalPaymentLabel">Rental Payment Credit:</td>
+        <td id="rentalPaymentCredit" aria-labelledby="rentalPaymentLabel"></td>
       </tr>
       <tr title="Portion of the deposit (excluding tax) credited towards purchase.">
-        <td class="result__label">Deposit Credit (pre-tax):</td>
-        <td id="depositCredit"></td>
+        <td class="result__label" id="depositCreditLabel">Deposit Credit (pre-tax):</td>
+        <td id="depositCredit" aria-labelledby="depositCreditLabel"></td>
       </tr>
       <tr title="Calculated credit based on the number of months rented and the deposit.">
-        <td class="result__label">Total Credit Amount:</td>
-        <td id="totalCredit"></td>
+        <td class="result__label" id="totalCreditLabel">Total Credit Amount:</td>
+        <td id="totalCredit" aria-labelledby="totalCreditLabel"></td>
       </tr>
-
-
       <tr title="Remaining amount owed, excluding tax, after applying credit.">
-        <td class="result__label">Balance Owing (before tax):</td>
-        <td id="balanceOwing"></td>
+        <td class="result__label" id="balanceOwingLabel">Balance Owing (before tax):</td>
+        <td id="balanceOwing" aria-labelledby="balanceOwingLabel"></td>
       </tr>
       <tr title="Total amount owed, including tax.">
-        <td class="result__label">Balance Owing (including tax):</td>
-        <td id="balanceOwingWithTax"></td>
+        <td class="result__label" id="balanceOwingWithTaxLabel" >Balance Owing (including tax):</td>
+        <td id="balanceOwingWithTax" aria-labelledby="balanceOwingWithTaxLabel"></td>
       </tr>
     </table>
-  </div>
+  </aside>
 
 </body>
 
