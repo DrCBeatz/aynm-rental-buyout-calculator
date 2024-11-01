@@ -47,6 +47,9 @@ temp/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 
-# Optional: Exclude package lock files if not committing them
-# package-lock.json
-# yarn.lock
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate.*
