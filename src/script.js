@@ -21,30 +21,67 @@ export const TAX_RATES = {
   'YT': 0.05
 };
 
+/**
+ * Calculates the deposit credit by removing the tax from the deposit amount.
+ * 
+ * @param {number} deposit - The deposit amount.
+ * @param {number} taxRate - The tax rate as a decimal (e.g., 0.13 for 13%).
+ * @returns {number} - The deposit credit after tax deduction.
+ */
 export function calculateDepositCredit(deposit, taxRate) {
   return parseFloat((deposit / (1 + taxRate)).toFixed(2));
 }
 
+/**
+ * Calculates the rental payment credit based on the months rented.
+ * 
+ * @param {number} monthlyPayment - The monthly rental payment amount.
+ * @param {number} monthsRented - The number of months the item has been rented.
+ * @returns {Object} - An object containing the credit percentage and calculated rental payment credit.
+ */
 export function calculateRentalPaymentCredit(monthlyPayment, monthsRented) {
   const creditPercentage = monthsRented <= 3 ? 100 : 50;
   const creditAmount = (creditPercentage / 100) * (monthlyPayment * monthsRented);
   return { creditPercentage, creditAmount: parseFloat(creditAmount.toFixed(2)) };
 }
 
+/**
+ * Calculates the total credit by summing the deposit credit and rental payment credit.
+ * 
+ * @param {number} depositCredit - The credit from the deposit.
+ * @param {number} rentalPaymentCredit - The credit from rental payments.
+ * @returns {number} - The total credit amount.
+ */
 export function calculateTotalCredit(depositCredit, rentalPaymentCredit) {
   return parseFloat((depositCredit + rentalPaymentCredit).toFixed(2));
 }
 
+/**
+ * Calculates the balance owing before tax by subtracting total credit from the purchase price.
+ * 
+ * @param {number} purchasePrice - The original purchase price.
+ * @param {number} totalCredit - The total credit amount.
+ * @returns {number} - The balance owing before tax.
+ */
 export function calculateBalanceOwingBeforeTax(purchasePrice, totalCredit) {
   return parseFloat((purchasePrice - totalCredit).toFixed(2));
 }
 
+/**
+ * Calculates the balance owing with tax applied.
+ * 
+ * @param {number} balanceOwingBeforeTax - The balance owing before tax.
+ * @param {number} taxRate - The applicable tax rate as a decimal.
+ * @returns {number} - The balance owing after tax.
+ */
 export function calculateBalanceOwingWithTax(balanceOwingBeforeTax, taxRate) {
   return parseFloat((balanceOwingBeforeTax * (1 + taxRate)).toFixed(2));
 }
 
 /**
  * Populates the province dropdown with each province and its corresponding tax rate.
+ * 
+ * @returns {void}
  */
 export function populateProvinceDropdown() {
   const provinceSelect = document.getElementById('province');
