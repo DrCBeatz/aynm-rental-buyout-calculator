@@ -19,7 +19,7 @@ describe('Calculation functions', () => {
     expect(result.creditAmount).toBeCloseTo(100, 2);  // Expecting credit amount
     expect(result.creditPercentage).toBe(100);        // Expecting 100% for <= 3 months
   });
-  
+
   it('calculates rental payment credit for more than 3 months rented', () => {
     const monthlyPayment = 50;
     const monthsRented = 4;
@@ -27,7 +27,7 @@ describe('Calculation functions', () => {
     expect(result.creditAmount).toBeCloseTo(100, 2);  // Expecting credit amount
     expect(result.creditPercentage).toBe(50);         // Expecting 50% for > 3 months
   });
-  
+
 
   it('calculates total credit correctly', () => {
     const depositCredit = 88.50;
@@ -77,12 +77,6 @@ describe('calculateBalanceOwing', () => {
     option.textContent = 'ON (13.00%)';
     provinceSelect.appendChild(option);
   });
-
-
-  // Utility function to round to two decimal places and return as a number for consistent comparisons
-  function roundToTwo(value) {
-    return parseFloat((Math.round(value * 100) / 100).toFixed(2));
-  }
 
   it('calculates balance owing correctly for less than 3 months rented', () => {
     const event = { preventDefault: vi.fn() };
@@ -192,17 +186,17 @@ describe('calculateBalanceOwing', () => {
     document.getElementById('monthlyPayment').value = '';
     document.getElementById('monthsRented').value = '';
     document.getElementById('deposit').value = '';
-  
+
     const event = { preventDefault: vi.fn() };
     calculateBalanceOwing(event);
-  
+
     expect(document.getElementById('depositCredit').textContent).toBe('$0.00');
     expect(document.getElementById('rentalPaymentCredit').textContent).toBe('(100%) $0.00');
     expect(document.getElementById('totalCredit').textContent).toBe('$0.00');
     expect(document.getElementById('balanceOwing').textContent).toBe('$0.00');
     expect(document.getElementById('balanceOwingWithTax').textContent).toBe('$0.00');
   });
-  
+
 
   it('handles non-numeric input values gracefully', () => {
     document.getElementById('purchasePrice').value = 'abc';
