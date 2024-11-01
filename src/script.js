@@ -72,15 +72,17 @@ export function calculateBalanceOwing(event) {
   const province = document.getElementById('province').value;
 
   const taxRate = TAX_RATES[province] || 0;
-  const depositPreTax = deposit / (1 + taxRate);
+  const depositPreTax = deposit / (1 + taxRate); // Calculate deposit excluding tax
   const rentalTotal = monthlyPayment * monthsRented;
 
-  // Determine the credit percentage based on rental duration
+  // Determine the credit percentage for rental payments based on rental duration
   const creditPercentage = monthsRented <= 3 ? 1.0 : 0.5;
   const creditLabel = monthsRented <= 3 ? "100%" : "50%";
 
-  // Calculate the total credit
-  const totalCredit = creditPercentage * (rentalTotal + depositPreTax);
+  // Calculate the credits
+  const depositCredit = depositPreTax; // Always 100% of deposit excluding tax
+  const rentalPaymentCredit = creditPercentage * rentalTotal; // Credited amount from rental payments
+  const totalCredit = depositCredit + rentalPaymentCredit; // Total credit is sum of both
 
   // Calculate balance owing before tax
   const balanceOwing = purchasePrice - totalCredit;
@@ -89,7 +91,9 @@ export function calculateBalanceOwing(event) {
   const balanceOwingWithTax = balanceOwing * (1 + taxRate);
 
   // Display results
-  document.getElementById('totalCredit').textContent = `(${creditLabel}) $${totalCredit.toFixed(2)}`;
+  document.getElementById('depositCredit').textContent = `$${depositCredit.toFixed(2)}`; // Show deposit credit
+  document.getElementById('rentalPaymentCredit').textContent = `(${creditLabel}) $${rentalPaymentCredit.toFixed(2)}`; // Show rental payment credit
+  document.getElementById('totalCredit').textContent = `$${totalCredit.toFixed(2)}`;
   document.getElementById('balanceOwing').textContent = `$${balanceOwing.toFixed(2)}`;
   document.getElementById('balanceOwingWithTax').textContent = `$${balanceOwingWithTax.toFixed(2)}`;
   document.getElementById('result').style.display = 'block';

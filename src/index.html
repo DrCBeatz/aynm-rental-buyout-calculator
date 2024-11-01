@@ -49,10 +49,20 @@
 
   <div id="result" class="result">
     <table class="result__table">
+      <tr title="Portion of the rental payments credited towards purchase.">
+        <td class="result__label">Rental Payment Credit:</td>
+        <td id="rentalPaymentCredit"></td>
+      </tr>
+      <tr title="Portion of the deposit (excluding tax) credited towards purchase.">
+        <td class="result__label">Deposit Credit (pre-tax):</td>
+        <td id="depositCredit"></td>
+      </tr>
       <tr title="Calculated credit based on the number of months rented and the deposit.">
         <td class="result__label">Total Credit Amount:</td>
         <td id="totalCredit"></td>
       </tr>
+      
+      
       <tr title="Remaining amount owed, excluding tax, after applying credit.">
         <td class="result__label">Balance Owing (before tax):</td>
         <td id="balanceOwing"></td>
@@ -63,6 +73,8 @@
       </tr>
     </table>
   </div>
+  
+  
 
 </body>
 
