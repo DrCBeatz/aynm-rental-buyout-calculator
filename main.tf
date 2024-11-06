@@ -1,3 +1,5 @@
+# main.tf
+
 # Data resource to retrieve the Route 53 hosted zone for the domain
 data "aws_route53_zone" "zone" {
   name = "aynm-rental-buyout-calculator.com"
