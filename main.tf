@@ -63,10 +63,18 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
+
+resource "aws_cloudfront_function" "security_headers_function" {
+  name = "add-security-headers"
+  runtime = "cloudfront-js-1.0"
+  comment = "Function to add security headers to response headers"
+  code = file("${path.module}/add-security-headers.js")
+}
+
 # Define CloudFront distribution for S3 website
 resource "aws_cloudfront_distribution" "cdn" {
   origin {
-    domain_name = "aynm-rental-buyout-calculator.s3-website.us-east-2.amazonaws.com"  # Replace with correct region endpoint
+    domain_name = "aynm-rental-buyout-calculator.s3-website.us-east-2.amazonaws.com"
     origin_id   = "S3-AYNM-Buyout-Calculator"
 
     custom_origin_config {
@@ -103,6 +111,11 @@ resource "aws_cloudfront_distribution" "cdn" {
       cookies {
         forward = "none"
       }
+    }
+
+    function_association {
+      event_type   = "viewer-response"
+      function_arn = aws_cloudfront_function.security_headers_function.arn
     }
   }
 
