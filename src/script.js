@@ -1,4 +1,4 @@
-// script.js
+// src/script.js
 
 /**
  * An object containing tax rates for each Canadian province/territory.
