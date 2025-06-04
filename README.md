@@ -48,12 +48,12 @@ A web application designed to calculate the remaining buyout balance for rented 
 The calculator will display:
 - **Rental Payment Credit:** A portion of the rental payments that apply toward purchase.
 - **Deposit Credit**: Deposit amount adjusted for tax.
-- **Total Credit Amount:** Total pplied credit from rental payment and deposit.
+- **Total Credit Amount:** Total applied credit from rental payments and deposit.
 - **Balance Owing:** Amount due before and after tax.
 
 ## File Structure
 
-The project's organizion is as follows:
+The project's organization is as follows:
 
 ```plaintext
 .
@@ -82,11 +82,11 @@ npm test
 
 ## Deployment
 
-This project cn be deployed on AWS with S3, CloudFront, and Route 53 using **Terraform** for automated setup.
+This project can be deployed on AWS with S3, CloudFront, and Route 53 using **Terraform** for automated setup.
 
 ### Steps:
 1. Configure AWS credentials in your environment
-2. Run Terrform to provision the S3 bucket and CloudFront distribution:
+2. Run Terraform to provision the S3 bucket and CloudFront distribution:
     ```bash
     terraform init
     terraform apply
@@ -97,7 +97,7 @@ This project cn be deployed on AWS with S3, CloudFront, and Route 53 using **Ter
 Contributions are welcome! Here's how you can help:
 1. Fork this repository.
 2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your chnges and run tests.
+3. Make your changes and run tests.
 4. Submit a pull request.
 
 ## License
