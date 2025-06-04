@@ -44,7 +44,9 @@ jobs:
       - name: Install AWS CLI
         run: |
           sudo apt-get update
-          sudo apt-get install -y awscli
+          sudo apt-get install -y python3-pip
+          pip3 install --user awscli
+          echo "${HOME}/.local/bin" >> $GITHUB_PATH
       
       - name: Deploy to S3
         env:
