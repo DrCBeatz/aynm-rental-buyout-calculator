@@ -1,8 +1,18 @@
 // tests/script.test.js
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { calculateBalanceOwing, TAX_RATES } from '../src/script.js';
-import { calculateDepositCredit, calculateRentalPaymentCredit, calculateTotalCredit, calculateBalanceOwingBeforeTax, calculateBalanceOwingWithTax } from '../src/script.js';
+import { calculateBalanceOwing, TAX_RATES, populateProvinceDropdown, calculateDepositCredit, calculateRentalPaymentCredit, calculateTotalCredit, calculateBalanceOwingBeforeTax, calculateBalanceOwingWithTax } from '../src/script.js';
+
+describe('populateProvinceDropdown', () => {
+  it('populates select with all provinces', () => {
+    document.body.innerHTML = '<select id="province"></select>';
+    populateProvinceDropdown();
+    const options = document.querySelectorAll('#province option');
+    expect(options.length).toBe(Object.keys(TAX_RATES).length);
+    const onOption = Array.from(options).find(o => o.value === 'ON');
+    expect(onOption.textContent).toBe('ON (13%)');
+  });
+});
 
 describe('Calculation functions', () => {
 
@@ -19,6 +29,18 @@ describe('Calculation functions', () => {
     expect(calculateDepositCredit(deposit, taxRate)).toBeCloseTo(95.24, 2);
   });
 
+  it('handles negative deposit values', () => {
+    const deposit = -100;
+    const taxRate = 0.13;
+    expect(calculateDepositCredit(deposit, taxRate)).toBeCloseTo(-88.5, 2);
+  });
+
+  it('rounds correctly with zero deposit', () => {
+    const deposit = 0;
+    const taxRate = 0.13;
+    expect(calculateDepositCredit(deposit, taxRate)).toBeCloseTo(0, 2);
+  });
+
   it('calculates rental payment credit for less than 3 months rented', () => {
     const monthlyPayment = 50;
     const monthsRented = 2;
@@ -33,6 +55,14 @@ describe('Calculation functions', () => {
     const result = calculateRentalPaymentCredit(monthlyPayment, monthsRented);
     expect(result.creditAmount).toBeCloseTo(100, 2);  // Expecting credit amount
     expect(result.creditPercentage).toBe(50);         // Expecting 50% for > 3 months
+  });
+
+  it('handles fractional months rented', () => {
+    const monthlyPayment = 50;
+    const monthsRented = 2.5;
+    const result = calculateRentalPaymentCredit(monthlyPayment, monthsRented);
+    expect(result.creditAmount).toBeCloseTo(125, 2);
+    expect(result.creditPercentage).toBe(100);
   });
 
 
@@ -305,6 +335,29 @@ describe('calculateBalanceOwing', () => {
     expect(totalCredit).toBe('$189.23');
     expect(balanceOwing).toBe('$811.76');
     expect(balanceOwingWithTax).toBe('$917.29'); // Balance Owing including 13% tax
+  });
+
+  it('handles negative deposit values in DOM calculations', () => {
+    document.getElementById('deposit').value = '-50';
+
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+
+    expect(document.getElementById('depositCredit').textContent).toBe('$-44.25');
+    expect(document.getElementById('rentalPaymentCredit').textContent).toBe('(100%) $100.00');
+    expect(document.getElementById('totalCredit').textContent).toBe('$55.75');
+    expect(document.getElementById('balanceOwing').textContent).toBe('$944.25');
+    expect(document.getElementById('balanceOwingWithTax').textContent).toBe('$1067.00');
+  });
+
+  it('truncates fractional months rented in DOM calculations', () => {
+    document.getElementById('monthsRented').value = '2.5';
+
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+
+    expect(document.getElementById('rentalPaymentCredit').textContent).toBe('(100%) $100.00');
+    expect(document.getElementById('monthsRented').value).toBe('2.5');
   });
 
 
