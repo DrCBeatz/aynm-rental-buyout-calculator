@@ -8,16 +8,17 @@
 export const TAX_RATES = {
   'ON': 0.13,
   'QC': 0.14975,
-  'BC': 0.12,
+  // GST only in all provinces except ON and QC
+  'BC': 0.05,
   'AB': 0.05,
-  'MB': 0.12,
-  'NB': 0.15,
-  'NL': 0.15,
-  'NS': 0.15,
+  'MB': 0.05,
+  'NB': 0.05,
+  'NL': 0.05,
+  'NS': 0.05,
   'NT': 0.05,
   'NU': 0.05,
-  'PE': 0.15,
-  'SK': 0.11,
+  'PE': 0.05,
+  'SK': 0.05,
   'YT': 0.05
 };
 

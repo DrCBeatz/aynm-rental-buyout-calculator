@@ -12,6 +12,13 @@ describe('Calculation functions', () => {
     expect(calculateDepositCredit(deposit, taxRate)).toBeCloseTo(88.50, 2);
   });
 
+  it('uses GST-only rate for BC', () => {
+    const deposit = 100;
+    const taxRate = TAX_RATES['BC'];
+    expect(taxRate).toBeCloseTo(0.05, 2);
+    expect(calculateDepositCredit(deposit, taxRate)).toBeCloseTo(95.24, 2);
+  });
+
   it('calculates rental payment credit for less than 3 months rented', () => {
     const monthlyPayment = 50;
     const monthsRented = 2;
@@ -158,6 +165,30 @@ describe('calculateBalanceOwing', () => {
     expect(totalCredit).toBe('$186.98');
     expect(balanceOwing).toBe('$813.02');
     expect(balanceOwingWithTax).toBe('$934.77'); // Including 14.975% tax
+  });
+
+  it('calculates correctly for a GST-only province (BC)', () => {
+    const provinceSelect = document.getElementById('province');
+    provinceSelect.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = 'BC';
+    option.textContent = 'BC (5%)';
+    provinceSelect.appendChild(option);
+
+    const event = { preventDefault: vi.fn() };
+    calculateBalanceOwing(event);
+
+    const rentalPaymentCredit = document.getElementById('rentalPaymentCredit').textContent;
+    const depositCredit = document.getElementById('depositCredit').textContent;
+    const totalCredit = document.getElementById('totalCredit').textContent;
+    const balanceOwing = document.getElementById('balanceOwing').textContent;
+    const balanceOwingWithTax = document.getElementById('balanceOwingWithTax').textContent;
+
+    expect(depositCredit).toBe('$95.24'); // deposit pre-tax with 5% GST
+    expect(rentalPaymentCredit).toBe('(100%) $100.00');
+    expect(totalCredit).toBe('$195.24');
+    expect(balanceOwing).toBe('$804.76');
+    expect(balanceOwingWithTax).toBe('$845.00');
   });
 
 
